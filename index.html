@@ -10,9 +10,12 @@
     <div class="card">
         
         <div class="search-container">
-            <button id="search-button"><img src="./images/68px-Google_Maps_pin.png"></button>
+            <button id="search-button"><img src="./images/search.png"></button>
             <input type="text" id="text-input" placeholder="Enter city name"
-            spellcheck="false">
+            spellcheck="false" onkeydown="checkEnterKey(event)">
+        </div>
+        <div class="not-found" style="display: none;">
+            <p>City not found. Check the city name.</p>
         </div>
         <div class="weather">
             <img src="./images/rain.png" class="weather-icon">

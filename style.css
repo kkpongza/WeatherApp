@@ -110,3 +110,8 @@ body {
 .weather {
     display: none;
 }
+
+.not-found p {
+    margin-top: 10px;
+    color: black;
+}
