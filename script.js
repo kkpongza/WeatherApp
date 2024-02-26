@@ -5,12 +5,14 @@ const humidIcon = document.querySelector('.humid-icon');
 const windIcon = document.querySelector('.wind-icon');
 const weatherCon = document.querySelector('.weather');
 const notFound = document.querySelector('.not-found');
+const quote = document.querySelector('.quote');
 
 
 const apiKey = '0d9101448da3669c6d77c9f035a7d833'
 const apiUrl = 'https://api.openweathermap.org/data/2.5/weather'
 
 async function checkWeather(){
+    await randomQuote();
    
     const city = document.getElementById('text-input').value
     //fetch api
@@ -28,7 +30,6 @@ async function checkWeather(){
         document.querySelector(".humidity").innerHTML = data.main.humidity + '%'
         document.querySelector(".wind").innerHTML = Math.round(data.wind.speed) + ' km/hr'
         
-        
     
         if(data.weather[0].main == "Clouds"){
             weatherIcon.src = 'images/clouds.png';
@@ -45,8 +46,7 @@ async function checkWeather(){
         weatherCon.style.display = 'block'
     }
     textfield.value = ""
-
-
+    
 
     //update image
     // var img = document.createElement("img");
@@ -54,12 +54,35 @@ async function checkWeather(){
     // weatherIcon.value = img;
 }
 
-sButton.addEventListener('click', () => {
-    checkWeather();
+async function randomQuote(){
+    var category = 'inspirational';
+    var apiURL = 'https://api.api-ninjas.com/v1/quotes?category=' + category;
+    var apiKey = 'OknMLmO7LWXksxk1+lekTg==RYrOUVUBZPb2oPjj';
+
+    try {
+        const response = await fetch(apiURL, {
+            method: 'GET',
+            headers: {
+                'X-Api-Key': apiKey,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+        console.log(data);
+        quote.innerHTML = data[0].quote;
+
+    } catch(err){
+        console.log(err.stack);
+    }
+}
+
+sButton.addEventListener('click', async () => {
+    await checkWeather();
 });
 
-function checkEnterKey(event) {
+async function checkEnterKey(event) {
     if (event.key === 'Enter') {
-      checkWeather();
+        await checkWeather();
     }
-  }
+}
